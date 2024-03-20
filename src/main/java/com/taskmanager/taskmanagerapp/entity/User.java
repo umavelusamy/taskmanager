@@ -1,5 +1,7 @@
 package com.taskmanager.taskmanagerapp.entity;
 
+import org.hibernate.envers.Audited;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -24,6 +26,7 @@ import lombok.ToString;
 @ToString(exclude = {"password"})
 @Entity
 @Table(name = "app_users")
+@Audited
 public class User {
 
     @Id

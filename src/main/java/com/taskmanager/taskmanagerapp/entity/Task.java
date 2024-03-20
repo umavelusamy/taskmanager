@@ -2,6 +2,8 @@ package com.taskmanager.taskmanagerapp.entity;
 
 import java.sql.Date;
 
+import org.hibernate.envers.Audited;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "app_tasks")
+@Audited
 public class Task {
 
     @Id
