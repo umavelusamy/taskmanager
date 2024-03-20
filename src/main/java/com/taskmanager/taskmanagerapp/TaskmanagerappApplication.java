@@ -2,6 +2,7 @@ package com.taskmanager.taskmanagerapp;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,7 +19,7 @@ import com.taskmanager.taskmanagerapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@SpringBootApplication (exclude = UserDetailsServiceAutoConfiguration.class)
+@SpringBootApplication(exclude = UserDetailsServiceAutoConfiguration.class)
 @RequiredArgsConstructor
 @EnableAsync
 @EnableScheduling
@@ -29,12 +30,20 @@ public class TaskmanagerappApplication implements CommandLineRunner {
 
 	private final PasswordEncoder passwordEncoder;
 
+	@Value("${spring.profiles.active}")
+	private String activeProfile;
+	@Value("${logging.level.org.springframework.security}")
+	private String logLevel;
+
 	public static void main(String[] args) {
 		SpringApplication.run(TaskmanagerappApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		System.out.println("====Active Profile: " + activeProfile);
+		System.out.println("=======log level should be TRACE in dev, INFO in Prod : " + logLevel);
 		List<User> admins = userRepository.findByRole(Role.ROLE_ADMIN, Limit.of(1));
 		if (admins.isEmpty()) {
 			User admUser = User.builder()
